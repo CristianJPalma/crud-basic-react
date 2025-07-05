@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
+const { width, height } = Dimensions.get('window');
 export default function Course(){
     return(
         <View style={styles.container}>
