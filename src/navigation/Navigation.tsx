@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screen/HomeScreen';
-import CourseRegister from '../screen/CourseRegisterScreen';
-import Course from '../screen/CourseScreen';
+import CourseRegister from '../screen/CourseScreens/CourseRegisterScreen';
+import Course from '../screen/CourseScreens/CourseScreen';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Dimensions, Platform, TouchableOpacity, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

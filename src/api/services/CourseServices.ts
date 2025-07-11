@@ -18,3 +18,14 @@ export const CreateCourse = async(register: ICourse) => {
         return error;
     }
 };
+
+export const GetAllCourses = async() => {
+    try {
+        const response = await fetch(COURSE_END_POINT);
+        if (!response.ok) throw new Error("Error al obtener los cursos");
+        let data = await response.json();
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
