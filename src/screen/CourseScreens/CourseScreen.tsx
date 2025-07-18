@@ -1,28 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import { Dimensions, Platform, Pressable, StyleSheet, Text, View, Modal, ScrollView, RefreshControl } from 'react-native';
-import { useCallback, useEffect, useState } from 'react';
+import { Dimensions, Platform, Pressable, StyleSheet, Text, View, Modal, RefreshControl, ScrollView } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
 import CourseRegister from './CourseRegisterScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CoursetackParamsList } from '../../navigation/types';
-import { ICourse } from '../../api/types/ICourse';
+import { ICourseList } from '../../api/types/ICourse';
 import { GetAllCourses } from '../../api/services/CourseServices';
 import { useNavigation } from '@react-navigation/native';
 import CourseCard from '../../components/CourseCards';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
 type CourseNavigationProps = NativeStackNavigationProp<
   CoursetackParamsList,
   'Course'
-  >;
-const  Course: React.FC = ()  =>{
+>;
+
+const Course: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     fetchCourses();
   }, []);
 
-  const [courses, setCourses] = useState<ICourse[]>([]);
+  const [courses, setCourses] = useState<ICourseList[]>([]);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -35,15 +37,11 @@ const  Course: React.FC = ()  =>{
   const fetchCourses = async () => {
     try {
       const data = await GetAllCourses();
-      console.log('Respuesta cruda del backend:', data); // <-- Agrega esto
-      // Filtra solo los cursos válidos
-      const validCourses = Array.isArray(data)
-        ? data.filter(course => course && course.course && course.course.id_courses)
-        : [];
+      console.log('Respuesta cruda del backend:', data);
+      const validCourses = Array.isArray(data) ? data : [];
       setCourses(validCourses);
     } catch (error) {
       console.error('Error al obtener courses:', error);
-      setCourses([]); // Asegura que courses sea un array vacío en caso de error
     }
   };
 
@@ -51,45 +49,49 @@ const  Course: React.FC = ()  =>{
 
   const navigation = useNavigation<CourseNavigationProps>();
   return (
-    <ScrollView contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      
-      <Pressable
-        onPress={() => setModalVisible(true)}
-        style={styles.addButton}>
-        <Text style={styles.addText}>+ Add Course</Text>
-      </Pressable>
-
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-        transparent={true}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#F9CDD0' }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 40, alignItems: 'center' }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <CourseRegister onClose={() => setModalVisible(false)} />
-          </View>
-        </View>
-      </Modal>
+        <Pressable
+          onPress={() => setModalVisible(true)}
+          style={styles.addButton}>
+          <Text style={styles.addText}>+ Add Course</Text>
+        </Pressable>
 
-      {courses.length === 0 ? (
-        <View style={styles.center}>
-          <Text style={styles.title}>No courses available</Text>
-          <Text style={styles.subtitle}>Please add a course</Text>
-        </View>
-      ) : (
-        courses.map((course) => (
-          <CourseCard key={course.course.id_courses} data={course} />
-        ))
-      )}
-    </ScrollView>
-    
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+          transparent={true}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <CourseRegister onClose={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
+
+        {courses.length === 0 ? (
+          <View style={styles.center}>
+            <Text style={styles.title}>No courses available</Text>
+            <Text style={styles.subtitle}>Please add a course</Text>
+          </View>
+        ) : (
+          courses.map((course) =>
+            <CourseCard
+              key={course.id_courses}
+              data={course}
+            />)
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9CDD0',
     alignItems: 'center',
   },
-    center: {
+  center: {
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
@@ -109,6 +111,7 @@ const styles = StyleSheet.create({
     height: Platform.OS === 'web' ? 70 : height * 0.09,
     width: Platform.OS === 'web' ? 320 : width * 0.80,
     marginTop: Platform.OS === 'web' ? 20 : height * 0.03,
+    marginBottom: Platform.OS === 'web' ? 15 : height * 0.018,
     borderRadius: 30,
     backgroundColor: '#07BA30',
     borderColor: '#fff',

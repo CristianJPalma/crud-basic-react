@@ -4,6 +4,7 @@ import { ICourse } from '../../api/types/ICourse';
 import { useState } from 'react';
 import { CreateCourse } from '../../api/services/CourseServices';
 import CourseForm from '../../components/CourseForm';
+import CustomModal from '../../components/CustomModal';
 
 interface Props {
   onClose?: () => void;
@@ -19,6 +20,9 @@ const CourseRegister: React.FC<Props> = ({ onClose }) => {
     recaptchaToken: ""
   });
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
   const handleChange = (name: string, value: string) => {
     if (name === "course_name" || name === "status" || name === "id_courses") {
       setForm({ ...form, course: { ...form.course, [name]: value } });
@@ -32,10 +36,14 @@ const CourseRegister: React.FC<Props> = ({ onClose }) => {
       console.log('Datos a enviar:', form);
       const register = await CreateCourse(form);
       console.log('Respuesta del backend:', register);
-      if (onClose) onClose();
+
+      setModalMessage(register?.message || "Curso registrado");
+      setModalVisible(true);
+
     } catch (error) {
       console.error('Error al guardar:', error);
-      alert('Error al guardar el curso');
+      setModalMessage('Error al guardar el curso');
+      setModalVisible(true);
     }
   };
 
@@ -44,6 +52,11 @@ const CourseRegister: React.FC<Props> = ({ onClose }) => {
       <CourseForm form={form} handleChange={handleChange} />
       <Button title="Save" onPress={registerCourse} />
       {onClose && <Button title="Close" onPress={onClose} color="red" />}
+      <CustomModal
+        visible={modalVisible}
+        message={modalMessage}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 };
