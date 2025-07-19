@@ -1,10 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { CoursetackParamsList } from "../navigation/types";
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform, Modal, } from "react-native";
-import { ICourseList } from "../api/types/ICourse";
-import { useState } from "react";
-import CourseDelete from "../screen/CourseScreens/CourseDeleteScreen";
+import { CoursetackParamsList } from "../../navigation/types";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform, Modal, Alert, Button } from "react-native";
+import { ICourseList } from "../../api/types/ICourse";
+import React, { useState } from "react";
+import CourseDelete from "../../screen/CourseScreens/CourseDeleteScreen";
+import CourseUpdate from "../../screen/CourseScreens/CourseEditScreen";
+
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -13,9 +15,8 @@ interface Props {
 }
 
 const CourseCard: React.FC<Props> = ({ data }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const navigation =
-        useNavigation<NativeStackNavigationProp<CoursetackParamsList>>();
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false);
 
     if (!data) return null;
 
@@ -29,26 +30,48 @@ const CourseCard: React.FC<Props> = ({ data }) => {
                 {data.course_name}
             </Text>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.buttonEdit} >
+                <TouchableOpacity
+                    style={styles.buttonEdit}
+                    onPress={() => setEditModalVisible(true)}
+                >
                     <Text style={styles.buttonText}>Edit</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonDelete} onPress={() => setModalVisible(true)} >
+                <TouchableOpacity
+                    style={styles.buttonDelete}
+                    onPress={() => setDeleteModalVisible(true)}
+                >
                     <Text style={styles.buttonText}>Delete</Text>
                 </TouchableOpacity>
             </View>
+            {/* Modal para eliminar */}
             <Modal
-                visible={modalVisible}
+                visible={deleteModalVisible}
                 animationType="slide"
-                onRequestClose={() => setModalVisible(false)}
+                onRequestClose={() => setDeleteModalVisible(false)}
                 transparent={true}
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text>{data.id_courses}</Text>
                         <CourseDelete
-                            id_courses={data.id_courses} 
-                            onClose={() => setModalVisible(false)}
+                            id_courses={data.id_courses}
+                            onClose={() => setDeleteModalVisible(false)}
+                        />
+                    </View>
+                </View>
+            </Modal>
+            {/* Modal para editar */}
+            <Modal
+                visible={editModalVisible}
+                animationType="slide"
+                onRequestClose={() => setEditModalVisible(false)}
+                transparent={true}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <CourseUpdate
+                            id_courses={Number(data.id_courses)}
+                            onClose={() => setEditModalVisible(false)}
                         />
                     </View>
                 </View>

@@ -1,6 +1,6 @@
 import { ScrollView, TextInput, StyleSheet, Button, View } from "react-native";
-import { ICourse } from "../api/types/ICourse";
-import ReCaptcha from "./ReCaptcha";
+import { ICourse } from "../../api/types/ICourse";
+import ReCaptcha from "../ReCaptcha";
 
 interface Props {
     form: ICourse;

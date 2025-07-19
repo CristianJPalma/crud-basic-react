@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, View } from 'react-native';
 
 const SITE_KEY = '6LeADR4rAAAAAD0c9CIg4-8uRh6jMAnHzJTyzfzq';
-const BASE_URL = 'http://localhost'; // Cambia por tu dominio real
+const BASE_URL = 'http://localhost';
 
 interface ReCaptchaProps {
   onVerify: (token: string) => void;

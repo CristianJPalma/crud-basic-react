@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { ICourse } from '../../api/types/ICourse';
 import { useState } from 'react';
 import { CreateCourse } from '../../api/services/CourseServices';
-import CourseForm from '../../components/CourseForm';
+import CourseForm from '../../components/CourseComponets/CourseForm';
 import CustomModal from '../../components/CustomModal';
 
 interface Props {

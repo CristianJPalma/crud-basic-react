@@ -1,5 +1,5 @@
 import { COURSE_END_POINT } from "../contants/Endpoint";
-import { ICourse, ICourseDelete } from "../types/ICourse";
+import { ICourse, ICourseDelete, ICourseList } from "../types/ICourse";
 
 export const CreateCourse = async(register: ICourse) => {
     try{
@@ -27,6 +27,31 @@ export const GetAllCourses = async() => {
         console.log(data);
         return data;
     } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export const EditCourse = async(id: number, register: ICourseList) => {
+    try{
+        const response = await fetch(COURSE_END_POINT + id, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(register)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            // console.error("Status:", response.status);
+            // console.error("Status Text:", response.statusText);
+            // console.error("Body:", errorText);
+            throw new Error("Error al editar el curso");
+        }
+        let data = await response.json();
+        console.log(data);
+        return data;
+    }
+    catch (error) {
         console.log(error);
         return error;
     }
