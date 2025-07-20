@@ -10,10 +10,11 @@ const { width, height } = Dimensions.get('window');
 
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import Learner from '../screen/LearnerScreens/LearnerScreen';
 
 type RootTabParamList = {
     Home: undefined;
-    Enrollment: undefined;
+    Learner: undefined;
     Course: undefined;
 };
 
@@ -40,12 +41,28 @@ function MyTabs() {
                 }}
             />
             <Tab.Screen
+                name='Learner'
+                component={Learner}
+                options={{
+                    headerTitleStyle: {
+                        ...styles.headerTitleStyle,
+                        fontWeight: 'bold'
+                    },
+                    headerStyle: [{ ...styles.headerStyle }, { backgroundColor: '#3E444A', borderColor: '#2A2E31' }],
+                    headerTitle: '👨‍🎓 Learner',
+                    headerTitleAlign: 'center',
+                    tabBarStyle: { display: 'none' },
+                    headerLeft: () => <CustomBackButton />,
+                }}
+            />
+
+            {/* <Tab.Screen
                 name="CourseRegister"
                 component={CourseRegister}
                 options={{
                     tabBarStyle: { display: 'none' },
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Course"
                 component={Course}

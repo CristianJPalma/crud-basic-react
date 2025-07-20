@@ -7,7 +7,7 @@ import { CoursetackParamsList } from '../../navigation/types';
 import { ICourseList } from '../../api/types/ICourse';
 import { GetAllCourses } from '../../api/services/CourseServices';
 import { useNavigation } from '@react-navigation/native';
-import CourseCard from '../../components/CourseComponets/CourseCards';
+import CourseCard from '../../components/CourseComponents/CourseCards';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');

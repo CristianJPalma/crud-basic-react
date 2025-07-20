@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ICourseList } from "../../api/types/ICourse";
 import { EditCourse, GetAllCourses } from "../../api/services/CourseServices";
 import { View, Button, Alert, StyleSheet } from "react-native";
-import CourseEditForm from "../../components/CourseComponets/CourseEditForm"; // <-- Cambia el import
+import CourseEditForm from "../../components/CourseComponents/CourseEditForm"; // <-- Cambia el import
 import CustomModal from "../../components/CustomModal";
 
 type DetailsRouteProp = RouteProp<CoursetackParamsList, "CourseUpdate">;
@@ -14,11 +14,7 @@ interface CourseUpdateProps {
 }
 
 const CourseUpdate: React.FC<CourseUpdateProps> = ({ id_courses, onClose }) => {
-    // Si viene por navegación, úsalo, si no, usa la prop
     let id = id_courses;
-    // Si quieres soportar ambos casos (modal y navegación), puedes hacer:
-    // const route = useRoute<DetailsRouteProp>();
-    // const id = id_courses ?? route.params?.id;
 
     const navigation = useNavigation();
     const [form, setForm] = useState<ICourseList>({

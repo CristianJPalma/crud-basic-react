@@ -3,3 +3,9 @@ export type CoursetackParamsList = {
   CourseUpdate: { id: string };
   CourseRegister: undefined;
 };
+
+export type LearnerParamsList = {
+  Learner: undefined;
+  LearnerUpdate: { id: string };
+  LearnerRegister: undefined;
+};

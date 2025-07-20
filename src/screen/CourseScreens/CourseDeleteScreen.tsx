@@ -3,7 +3,7 @@ import { DeleteCourse } from "../../api/services/CourseServices";
 import { ICourseDelete } from "../../api/types/ICourse";
 import ReCaptcha from "../../components/ReCaptcha";
 import { useState, useEffect } from "react";
-import CustomModal from "../../components/CustomModal"; // Asegúrate de tener este componente
+import CustomModal from "../../components/CustomModal";
 
 interface Props {
     id_courses: string;
