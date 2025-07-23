@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screen/HomeScreen';
-import CourseRegister from '../screen/CourseScreens/CourseRegisterScreen';
 import Course from '../screen/CourseScreens/CourseScreen';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { Dimensions, Platform, TouchableOpacity, Text } from 'react-native';
@@ -11,11 +10,13 @@ const { width, height } = Dimensions.get('window');
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Learner from '../screen/LearnerScreens/LearnerScreen';
+import Instructor from '../screen/InstructorScreens/InstructorScreen';
 
 type RootTabParamList = {
     Home: undefined;
     Learner: undefined;
     Course: undefined;
+    Instructor: undefined;
 };
 
 function CustomBackButton() {
@@ -55,14 +56,21 @@ function MyTabs() {
                     headerLeft: () => <CustomBackButton />,
                 }}
             />
-
-            {/* <Tab.Screen
-                name="CourseRegister"
-                component={CourseRegister}
+            <Tab.Screen
+                name='Instructor'
+                component={Instructor}
                 options={{
+                    headerTitleStyle: {
+                        ...styles.headerTitleStyle,
+                        fontWeight: 'bold'
+                    },
+                    headerStyle: [{ ...styles.headerStyle }, { backgroundColor: '#CC9A06', borderColor: '#8A6B03' }],
+                    headerTitle: '👩‍🏫 Instructor',
+                    headerTitleAlign: 'center',
                     tabBarStyle: { display: 'none' },
+                    headerLeft: () => <CustomBackButton />,
                 }}
-            /> */}
+                />
             <Tab.Screen
                 name="Course"
                 component={Course}

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Pressable, StyleSheet, Text, View,  } from 'react-native';
-import { CoursetackParamsList, LearnerParamsList } from '../navigation/types';
+import { CoursetackParamsList, InstructorParamsList, LearnerParamsList } from '../navigation/types';
 import { Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -17,9 +17,14 @@ type LearnerScreenNavigationProp = NativeStackNavigationProp<
   LearnerParamsList,
   "Learner"
 >;
+type InstructorScreenNavigationProp =  NativeStackNavigationProp<
+  InstructorParamsList,
+  "Instructor"
+>;
 export default function Home(){
     const navigation = useNavigation<CourseScreenNavigationProp>();
     const navigationLearner = useNavigation<LearnerScreenNavigationProp>();
+    const navigationInstructor = useNavigation<InstructorScreenNavigationProp>();
     return(
         <View style={styles.container}>
           <Text style={styles.titleTop}>----SENA----</Text>
@@ -37,7 +42,7 @@ export default function Home(){
             </Pressable>
 
             <Pressable
-              onPress={() => navigation.navigate("Course")}
+              onPress={() => navigationInstructor.navigate("Instructor")}
               style={[styles.buttons, { backgroundColor: '#FFC107', borderColor: '#DEA806', borderWidth: 3}]}>
             <Text style={styles.textButton}>👩‍🏫 Instructor</Text>
             </Pressable>

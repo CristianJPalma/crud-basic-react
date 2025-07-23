@@ -9,3 +9,9 @@ export type LearnerParamsList = {
   LearnerUpdate: { id: string };
   LearnerRegister: undefined;
 };
+
+export type InstructorParamsList = {
+  Instructor: undefined;
+  InstructorUpdate: { id: string };
+  InstructorRegister: undefined;
+}
